@@ -1087,8 +1087,8 @@ part1_box1 : new Dom(".part1_box1"),
 
       Scenes.items.concept_development.set().styles({
         zIndex: "5000",
-        scale: "1.087 0.9",
-        top: "-143px",
+        scale: "1.087 0.903",
+        top: "-144px",
         position: "absolute",
       })
 
@@ -1211,7 +1211,7 @@ part1_box1 : new Dom(".part1_box1"),
       let check = function(){
         Dom.setBlinkArrowRed(-1)
         console.log(checkCnnctn)
-        if(checkCnnctn == "111111"){
+        if(checkCnnctn == "11111"){
         Scenes.items.part1_crrct_text.set(10,40, null, 790)
           // after complete
           Dom.setBlinkArrow(true, 790, 408).play()
@@ -1221,7 +1221,7 @@ part1_box1 : new Dom(".part1_box1"),
         else{
           Scenes.items.part1_incrrct_text.set(10,40, null, 790) 
           wrongNoTimes+="1";
-          if(wrongNoTimes == "11111"){
+          if(wrongNoTimes == "1"){
             Dom.setBlinkArrowRed(true,882,-18,30,30,90).play()
             ee3_btn_hint.classList.remove("btn-deactive")
             frontText.hide()
@@ -1902,6 +1902,15 @@ part1_box1 : new Dom(".part1_box1"),
   // Scenes.items.hea.item.style.display = "none"
   // Scenes.items.slider_box.show("flex").set(-120, -40);
 
+  
+  // * for bigger screen
+  /*
+  let l = 465
+  let t = -75
+  let h = 474
+  let w = 470
+  Scenes.items.part_2_graph_data_upper.set(l,t,h,w).zIndex(2).hide()
+  */
   let l = 530
   let t = -50
   let h = 410
@@ -2410,10 +2419,12 @@ part1_box1 : new Dom(".part1_box1"),
           }
 
           // ! For front conclusion
-          Anime.fade(
-            Scenes.items.tempTitle1.set(null,100).setContent(conclusionFront).addClass("conclusion").item
-          )
+          // Anime.fade(
+          //   Scenes.items.tempTitle1.set(null,100).setContent(conclusionFront).addClass("conclusion").item
+          // )
 
+            Scenes.items.tempTitle1.set().setContent(conclusionFront).addClass("conclusion").item
+          
           Scenes.items.chart.label1.x = xLabel
           Scenes.items.chart.label1.y = yLabel
 
@@ -2923,10 +2934,11 @@ part1_box1 : new Dom(".part1_box1"),
           }
 
           // ! For front conclusion
-          Anime.fade(
-            Scenes.items.tempTitle1.set().setContent(conclusionFront).addClass("conclusion").item,1,13
-          )
-
+          // Anime.fade(
+            //   Scenes.items.tempTitle1.set().setContent(conclusionFront).addClass("conclusion").item,1,13
+            //   )
+            
+          Scenes.items.tempTitle1.set().setContent(conclusionFront).addClass("conclusion").item,1,13
           Scenes.items.chart.label2.x = xLabel
           Scenes.items.chart.label2.y = yLabel
 
@@ -3350,10 +3362,11 @@ part1_box1 : new Dom(".part1_box1"),
           }
 
           // ! For front conclusion
-          Anime.fade(
-            Scenes.items.tempTitle1.set().setContent(conclusionFront).addClass("conclusion").item
-          )
+          // Anime.fade(
+          //   Scenes.items.tempTitle1.set().setContent(conclusionFront).addClass("conclusion").item
+          // )
           
+          Scenes.items.tempTitle1.set().setContent(conclusionFront).addClass("conclusion").item
           Scenes.items.chart.label3.x = xLabel
           Scenes.items.chart.label3.y = yLabel
 
@@ -3878,9 +3891,10 @@ part1_box1 : new Dom(".part1_box1"),
           let conclusionFront = "The bar chart shows the switch, diode and capacitor voltage stresses. Voltage and current rating of these components must be at least equal to values shown by the bar chart."
 
           // ! For front conclusion
-          Anime.fade(
-            Scenes.items.tempTitle20.set().setContent(conclusionFront).addClass("conclusion").zIndex(3).item
-          )
+          // Anime.fade(
+          //   Scenes.items.tempTitle20.set().setContent(conclusionFront).addClass("conclusion").zIndex(3).item
+          // )
+          Scenes.items.tempTitle20.set().setContent(conclusionFront).addClass("conclusion").zIndex(3).item
           
           setIsProcessRunning(false); 
           Scenes.currentStep = 4
