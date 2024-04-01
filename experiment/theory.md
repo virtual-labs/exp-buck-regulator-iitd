@@ -500,7 +500,7 @@ Applying volt-sec balance on inductor (eqn. 22 and 23) <br><br>
 
 <div style="float: left; width:100%;"><br>
      
-Therefore, voltage gain of non-ideal boost converter is
+Simplifying eqn. (24) results in
 </div>
 
 
