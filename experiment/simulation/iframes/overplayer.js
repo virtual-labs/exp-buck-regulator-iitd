@@ -10,6 +10,7 @@ const overPlayer = {
     this.playBtn = document.querySelector(".play-controls-container__play-pause-button")
     this.playerNextBtn = document.querySelector(".navigation-controls__button_next")
     this.headTitle = document.querySelector(".info-container__title div")
+    this.changeWindowInnerHW();
 
     this.hideTrialBanner();
     this.updateTitle();
@@ -20,7 +21,8 @@ const overPlayer = {
     // * slide is running state
     localStorage.setItem("isSlideEnded",false)
 
-
+    this.disableRightClick();
+    
     // remove wher do you left 
     for(let key in localStorage){
       if(key.indexOf("ispring")!=-1){
@@ -29,7 +31,10 @@ const overPlayer = {
       }
     }
   },
-
+  changeWindowInnerHW(){
+    window.innerHeight = 700
+    window.innerWidth = 1200
+  },
   slidePlay() {
     const touchStartOn = function (el, x, y) {
       var e, err;
@@ -126,6 +131,9 @@ const overPlayer = {
       }
 
     },1000)
+  },
+  disableRightClick(){
+    document.addEventListener('contextmenu', event => event.preventDefault());
   },
 };
 

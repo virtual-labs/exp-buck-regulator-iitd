@@ -326,7 +326,7 @@ body{
 }
 
 
-  /* print */
+  /* print
   @media print{
     #drawer, .progress-bar, .anime-header, .anime-footer{
         display: none!important;
@@ -340,7 +340,7 @@ body{
 
 
     }
-  }
+  } */
   /* for transparent box */
   .transparent-box{
     display: none;

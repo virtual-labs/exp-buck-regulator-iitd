@@ -270,6 +270,8 @@ const setIsProcessRunning = (value) => {
 
   isRunning = value;
   if(value){
+    window.speechSynthesis.cancel()
+    ccQueue = []
     Dom.hideAll()
   }
 };
@@ -321,16 +323,14 @@ let student_name = "";
 
 // ! text to audio
 
-const 
-
-
-textToSpeach = (text) => {
-  // if(isMute){
-  //   return;
-  // }
+const textToSpeach = (text,speak=true) => {
   let utterance = new SpeechSynthesisUtterance();
   utterance.text = text;
   utterance.voice = window.speechSynthesis.getVoices()[0];
+  if(isMute || !speak){
+    utterance.volume = 0
+    utterance.rate = 10
+  }
   window.speechSynthesis.speak(utterance);
   return utterance;
 };
@@ -339,7 +339,7 @@ textToSpeach = (text) => {
 let ccQueue = [];
 // for subtitile
 let ccObj = null;
-function setCC(text = null, speed = 25) {
+function setCC(text = null, speed = 25, speak = true) {
   if (ccObj != null) {
     ccObj.destroy();
   }
@@ -350,14 +350,14 @@ function setCC(text = null, speed = 25) {
     strings: ["", ...ccQueue],
     typeSpeed: speed,
     onStringTyped(){
-      ccQueue.shift();
+      ccQueue.shift()
       // if(ccQueue.length != 0){
-      //   setCC(ccQueue.shift())
+      //   setCC(ccQueue.shift())`
       // }
     }
   });
-  if (!isMute) textToSpeach(text);
-  return ccDom;
+  let utterance = textToSpeach(text,speak)
+  return utterance
 }
    
 class Dom {
@@ -1112,6 +1112,7 @@ part1_box1 : new Dom(".part1_box1"),
         
       return true;
     }),  
+
     (step1 = function () {
       setIsProcessRunning(true)
       // to hide previous step
@@ -1222,7 +1223,7 @@ part1_box1 : new Dom(".part1_box1"),
           wrongNoTimes+="1";
           if(wrongNoTimes == "1"){
             Dom.setBlinkArrowRed(true,882,-18,30,30,90).play()
-            ee3_btn_hint.classList.remove("btn-deactive")
+            // ee3_btn_hint.classList.remove("btn-deactive")
             frontText.hide()
           }
           console.log("wrong no. of times",wrongNoTimes)
@@ -1325,7 +1326,7 @@ part1_box1 : new Dom(".part1_box1"),
       
       
       ee3_btn_check.classList.add("btn-deactive")
-      ee3_btn_hint.classList.add("btn-deactive")
+      // ee3_btn_hint.classList.add("btn-deactive")
 
 
       ee3_btn_check.onclick = check
@@ -1954,6 +1955,7 @@ part1_box1 : new Dom(".part1_box1"),
       dutyRatioSlider.min = "0.25";
       dutyRatioSlider.max = "0.75";
       dutyRatioSlider.step = "0.25";
+      dutyRatioSlider.value = "0.25"
       Scenes.items.slider_D.item.value = "0.25";
       
       let isOneTimeOver = false
@@ -2176,7 +2178,7 @@ part1_box1 : new Dom(".part1_box1"),
         // after complete
         // Dom.setBlinkArrow(true, 790, 408).play();
         setCC("Simulation Done");
-        setIsProcessRunning(false);
+        // setIsProcessRunning(false);
       }
 
       return true;
@@ -2913,7 +2915,8 @@ part1_box1 : new Dom(".part1_box1"),
               dataLabel1 = "M(D) non-ideal"
               dataLabel2 = "M(D) ideal"
               conclusionFront = "Voltage gain depends on the load resistance and  non-ideal voltage gain is lesser than ideal voltage gain due to voltage drops in various components."
-              setCC("The conclusion of these observation is that Voltage gain depends on the load resistance and  non-ideal voltage gain is lesser than ideal voltage gain due to voltage drops in various components.",3)
+              setCC("The conclusion of these observation is that Voltage gain depends on the load resistance and") 
+              setCC("non-ideal voltage gain is lesser than ideal voltage gain due to voltage drops in various components.",3)
               break
 
             case  'D-vs-I': 
@@ -2929,7 +2932,8 @@ part1_box1 : new Dom(".part1_box1"),
               dataLabel1 = "V₀ (V) non-ideal"
               dataLabel2 = "V₀ (V) ideal"
               conclusionFront = "Load voltage depends on the load resistance and  non-ideal load voltage is lesser than ideal load voltage due to voltage drops in various components."
-              setCC("The conclusion of these observation is that load voltage depends on the load resistance and  non-ideal load voltage is lesser than ideal load voltage due to voltage drops in various components.",3)
+              setCC("The conclusion of these observation is that load voltage depends on the load resistance and")  
+              setCC("non-ideal load voltage is lesser than ideal load voltage due to voltage drops in various components.",3)
               break
           }
 
@@ -3886,7 +3890,8 @@ part1_box1 : new Dom(".part1_box1"),
           // after complete
           Dom.setBlinkArrow(true, 790, 408).play();
           // setCC("Click 'Next' to go to next step");
-          setCC("The bar shows the switch, diode and capacitor voltage stresses. Voltage and current rating of these components must be at least equal to values shown by the bar chart.")
+          setCC("The bar chart shows the switch, diode and capacitor voltage stresses.")
+          setCC("Voltage and current rating of these components must be at least equal to values shown by the bar chart.")
 
           let conclusionFront = "The bar chart shows the switch, diode and capacitor voltage stresses. Voltage and current rating of these components must be at least equal to values shown by the bar chart."
 
