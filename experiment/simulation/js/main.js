@@ -262,6 +262,11 @@ function toggleNextBtn(){
   let nextBtn = document.querySelector(".btn-next")
   nextBtn.classList.toggle("btn-deactive")
 }
+const cancelSpeech = ()=>{
+  window.speechSynthesis.cancel()
+  ccQueue = []
+}
+
 const setIsProcessRunning = (value) => {
   // calling toggle the next
   if(value != isRunning){
@@ -270,10 +275,10 @@ const setIsProcessRunning = (value) => {
 
   isRunning = value;
   if(value){
-    window.speechSynthesis.cancel()
-    ccQueue = []
+    cancelSpeech()
     Dom.hideAll()
   }
+  Download.checkForHideAndBlink(value)
 };
 
 // global for document object
@@ -1078,7 +1083,9 @@ part1_box1 : new Dom(".part1_box1"),
       return true;
       }),
     (objective = function () {
+      Download.setRealCurrentStep(1)
       setIsProcessRunning(true);
+
       Dom.hideAll()
       // require
       Scenes.items.slider_box.hide()
@@ -1112,9 +1119,10 @@ part1_box1 : new Dom(".part1_box1"),
         
       return true;
     }),  
-
     (step1 = function () {
+      Download.setRealCurrentStep(2)
       setIsProcessRunning(true)
+
       // to hide previous step
       Dom.hideAll()
       Scenes.items.projectIntro.hide()
@@ -1860,6 +1868,7 @@ part1_box1 : new Dom(".part1_box1"),
       return true
     }),
     (step2 = function () {
+      Download.setRealCurrentStep(3)
       setIsProcessRunning(true);
  
       Scenes.setStepHeading(
@@ -2041,7 +2050,9 @@ part1_box1 : new Dom(".part1_box1"),
       return true
     }),
     (step3 = function () {
+      Download.setRealCurrentStep(4)
       setIsProcessRunning(true);
+
       Scenes.items.btn_next.show()
       
       // todo all previous elements hide
@@ -2185,7 +2196,9 @@ part1_box1 : new Dom(".part1_box1"),
 
     }),
     (step4 = function () {
+      Download.setRealCurrentStep(5)
       setIsProcessRunning(true);
+
  
       Scenes.setStepHeading(
         "",
@@ -2631,7 +2644,9 @@ part1_box1 : new Dom(".part1_box1"),
       return true
     }),
     (step5 = function () {
+      Download.setRealCurrentStep(6)
       setIsProcessRunning(true);
+
       Dom.hideAll()
       Scenes.setStepHeading(
         "",
@@ -3145,6 +3160,7 @@ part1_box1 : new Dom(".part1_box1"),
       return true;
     }),
     (step6 = function () {
+      Download.setRealCurrentStep(7)
       setIsProcessRunning(true);
  
       Scenes.setStepHeading(
@@ -3575,7 +3591,9 @@ part1_box1 : new Dom(".part1_box1"),
       return true
     }),
     (step7 = function () {
+      Download.setRealCurrentStep(8)
       setIsProcessRunning(true);
+
  
       Scenes.setStepHeading(
         "",

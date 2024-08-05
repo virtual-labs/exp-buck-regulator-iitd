@@ -10,13 +10,15 @@ const Download = {
   isBtnDownloadClicked: false,
   mainContainerHeight: 638,
   spinnerTimeoutSeconds: 2000, 
+  realCurrentStep: 1,
+  menuStep: 4,
   // 1 step aage
-  removeFromThese: [1, 2],
+  removeFromThese: [1, 2, 3, 4],
   init() {
     this.setOnClicks();
     // this.showTookitForCurrentStep();
     this.setBtnDownloadBlink();
-    this.checkForStepEnd();
+    // this.checkForStepEnd();
     this.stopImageDrag();
     this.disableRightClick();
     this.setBtnMuteOnClick();
@@ -146,6 +148,7 @@ const Download = {
     if (this.isMobileUser) {
       return;
     }
+    // alert(this.isMobileUser)
     const windowInnerHeight = parseFloat(window.innerHeight);
     const mainContainerHeight = this.mainContainerHeight
     let scalePercent = windowInnerHeight / mainContainerHeight;
@@ -203,6 +206,42 @@ const Download = {
       this.spinnerTimeoutSeconds = 5000
     }
     // alert(zoomLevel)
+  },
+  setRealCurrentStep(step){
+    this.realCurrentStep = step
+    if(step == this.menuStep){
+      this.toolkitHide()
+    }
+  },
+  // this will active the blink and arrow
+  active(){
+    this.setBlinkArrowYellow(true, 12, 495).play();
+    this.btnDownloadBlinkAnime.play();
+  },
+  toolkitShow(){
+    $(".toolkit").show("slow");
+    $(".main-window").removeClass("border-right-radius");
+  },
+  toolkitHide(){
+    $(".toolkit").hide("slow");
+    $(".main-window").addClass("border-right-radius");
+  },
+  checkForHideAndBlink(process){
+    let removeFromThis = this.removeFromThese.indexOf(this.realCurrentStep) != -1
+
+
+    if(removeFromThis){
+      this.toolkitHide()
+      this.setBlinkArrowYellow(-1)
+    }
+    else{
+      if(process){
+        this.toolkitShow()
+      }
+      else if(!removeFromThis && process==false){
+        this.active()
+      }
+    }
   },
 };
 
