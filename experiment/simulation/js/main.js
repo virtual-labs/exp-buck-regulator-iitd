@@ -278,7 +278,6 @@ const setIsProcessRunning = (value) => {
     cancelSpeech()
     Dom.hideAll()
   }
-  Download.checkForHideAndBlink(value)
 };
 
 // global for document object
@@ -329,6 +328,8 @@ let student_name = "";
 // ! text to audio
 
 const textToSpeach = (text,speak=true) => {
+  // for filter <sub></sub>
+  text = text.replaceAll("<sub>"," ").replaceAll("</sub>"," ")
   let utterance = new SpeechSynthesisUtterance();
   utterance.text = text;
   utterance.voice = window.speechSynthesis.getVoices()[0];
@@ -398,6 +399,10 @@ class Dom {
   }
   rotate(deg) {
     this.item.style.transform = `rotate(${deg}deg)`;
+    return this;
+  }
+  setContent(text) {
+    this.item.innerHTML = text;
     return this;
   }
   addClass(className){
@@ -500,6 +505,128 @@ class Dom {
       i.reset();
     } 
     Dom.resetItems();
+  }
+  onClick(callback=null){
+    if(callback==null){
+      this.item.onclick = ()=>{}
+    }else{
+      this.item.onclick = callback
+    }
+    return this
+  }
+  static maskClick(
+    mask,
+    onClick,
+    leftAndDevMode = false,
+    top = 0,
+    height = 100,
+    width = 100,
+    rotate = 0
+  ) {
+    let maskImg = mask;
+    // default px
+    let leftPx = typeof leftAndDevMode === "boolean" ? 0 : leftAndDevMode;
+    maskImg.set(leftPx, top, height, width).rotate(rotate).zIndex(1000);
+    maskImg.styles({ cursor: "pointer" }).onClick(() => {
+      maskImg.styles({ cursor: "unset" });
+      maskImg.zIndex(0);
+      Dom.setBlinkArrowRed(-1)
+      maskImg.onClick(); // it will null
+      if (onClick) {
+        onClick();
+      }
+    });
+
+    if (leftAndDevMode === true) {
+      maskImg.styles({background: "red"})
+    }
+    return maskImg;
+  }
+  static setBlinkArrowOnElement(
+    connectingElement,
+    direction,
+    arrowLeft = null,
+    arrowTop = null
+  ) {
+    let blinkArrow = new Dom(".blinkArrowRed");
+    let arrowHeight = 30;
+    let arrowWidth = 38.25;
+    let arrowRotate = 0;
+    let gap = 6
+
+    // get left top height and width of the connectingElement
+    const connectingElementProps = {
+      left: connectingElement.item.offsetLeft,
+      top: connectingElement.item.offsetTop,
+      right: Number(
+        connectingElement.item.offsetLeft + connectingElement.item.offsetWidth
+      ),
+      bottom: Number(
+        connectingElement.item.offsetTop + connectingElement.item.offsetHeight
+      ),
+      centerX: Number(
+        connectingElement.item.offsetLeft +
+          connectingElement.item.offsetWidth / 2
+      ).toFixed(2),
+      centerY: Number(
+        connectingElement.item.offsetTop +
+          connectingElement.item.offsetHeight / 2
+      ).toFixed(2),
+    };
+
+    // for(let key in  connectingElementProps) {
+    //   console.log(connectingElement.item)
+    //   console.log(`${key}: ${connectingElementProps[key]}`)
+    // }
+
+    switch (direction) {
+      case "left":
+        arrowRotate = 90;
+        arrowLeft = connectingElementProps.left -  arrowWidth - gap;
+        arrowTop = connectingElementProps.centerY - arrowHeight / 2;
+        break;
+
+      case "right":
+        arrowRotate = -90;
+        arrowLeft = connectingElementProps.right + gap;
+        arrowTop = connectingElementProps.centerY - arrowHeight / 2;
+        break;
+
+      case "top":
+        arrowRotate = -180;
+        arrowLeft = connectingElementProps.centerX - arrowWidth / 2;
+        arrowTop = connectingElementProps.top - arrowHeight - gap
+        break;
+
+      case "bottom":
+        arrowRotate = 0;
+        arrowLeft = connectingElementProps.centerX - arrowWidth / 2;
+        arrowTop = connectingElementProps.bottom + gap;
+        break;
+    }
+
+    blinkArrow.set(arrowLeft, arrowTop, arrowHeight, arrowWidth).rotate(arrowRotate + 90).zIndex(10000);
+    let y = 20;
+
+    var blink = anime({
+      targets: blinkArrow.item,
+      easing: "easeInOutQuad",
+      opacity: 1,
+      translateX: y,
+      direction: "alternate",
+      loop: true,
+      autoplay: false,
+      duration: 300,
+    });
+    return {
+      reset() {
+        blinkArrow.hide();
+        blink.reset();
+      },
+      play() {
+        blink.play();
+      },
+    };
   }
   static resetItems() {
     Dom.arrayOfItems = [];
@@ -907,7 +1034,13 @@ concept_development : new Dom(".concept_development"),
 part1_box1 : new Dom(".part1_box1"),
 
 
-
+hw_result_1_1 : new Dom("hw_result_1_1"),
+hw_result_2_1 : new Dom("hw_result_2_1"),
+hw_result_2_2 : new Dom("hw_result_2_2"),
+hw_result_2_3 : new Dom("hw_result_2_3"),
+hw_result_2_4 : new Dom("hw_result_2_4"),
+hw_result_menu : new Dom("hw_result_menu"),
+mask : new Dom("mask"),
 
      
         
@@ -996,7 +1129,7 @@ part1_box1 : new Dom(".part1_box1"),
   // for typing hello text
   intru: null,
   intruVoice: null,
-  optionsDone:[0,0,0,0],
+  optionsDone:[1,1,1,1],
   steps: [
     (intro = () => {
       // remove all dom element for back and setProcessRunning
@@ -1079,11 +1212,11 @@ part1_box1 : new Dom(".part1_box1"),
                 setIsProcessRunning(false);
             },
           });
-      };
+      };  
       return true;
       }),
     (objective = function () {
-      Download.setRealCurrentStep(1)
+      
       setIsProcessRunning(true);
 
       Dom.hideAll()
@@ -1120,7 +1253,7 @@ part1_box1 : new Dom(".part1_box1"),
       return true;
     }),  
     (step1 = function () {
-      Download.setRealCurrentStep(2)
+      
       setIsProcessRunning(true)
 
       // to hide previous step
@@ -1868,7 +2001,7 @@ part1_box1 : new Dom(".part1_box1"),
       return true
     }),
     (step2 = function () {
-      Download.setRealCurrentStep(3)
+      
       setIsProcessRunning(true);
  
       Scenes.setStepHeading(
@@ -2050,17 +2183,16 @@ part1_box1 : new Dom(".part1_box1"),
       return true
     }),
     (step3 = function () {
-      Download.setRealCurrentStep(4)
+      
       setIsProcessRunning(true);
 
-      Scenes.items.btn_next.show()
       
       // todo all previous elements hide
       Dom.hideAll();
       Scenes.items.contentAdderBox.item.innerHTML = ""
+      Scenes.items.btn_next.show()
 
       Scenes.setStepHeading("Step-3", "Performance Analysis.");
-      setCC("Click on the 'ICON' to plot the performance characteristics.")
       
       // * remove all previous restrictions
       
@@ -2186,17 +2318,20 @@ part1_box1 : new Dom(".part1_box1"),
       }      
 
       if(exit){
-        // after complete
-        // Dom.setBlinkArrow(true, 790, 408).play();
-        setCC("Simulation Done");
-        // setIsProcessRunning(false);
+        setCC("Click 'Next' to go to next step");
+        Dom.setBlinkArrow(true, 790, 410).play();
+        setIsProcessRunning(false);
+        Scenes.currentStep = 8
+      }else{
+        setCC("Click on the 'ICON' to plot the performance characteristics.")
+
       }
 
       return true;
 
     }),
     (step4 = function () {
-      Download.setRealCurrentStep(5)
+      
       setIsProcessRunning(true);
 
  
@@ -2644,7 +2779,7 @@ part1_box1 : new Dom(".part1_box1"),
       return true
     }),
     (step5 = function () {
-      Download.setRealCurrentStep(6)
+      
       setIsProcessRunning(true);
 
       Dom.hideAll()
@@ -3160,7 +3295,7 @@ part1_box1 : new Dom(".part1_box1"),
       return true;
     }),
     (step6 = function () {
-      Download.setRealCurrentStep(7)
+      
       setIsProcessRunning(true);
  
       Scenes.setStepHeading(
@@ -3591,7 +3726,7 @@ part1_box1 : new Dom(".part1_box1"),
       return true
     }),
     (step7 = function () {
-      Download.setRealCurrentStep(8)
+      
       setIsProcessRunning(true);
 
  
@@ -3934,6 +4069,205 @@ part1_box1 : new Dom(".part1_box1"),
       
       return true
     }),
+     //! HW Result Start - Menu
+     (step8 = function () {
+      setIsProcessRunning(true);
+      // to hide previous step
+      Dom.hideAll();
+      Scenes.items.slider_box.hide()
+
+      Scenes.items.btn_next.show()
+      // 
+
+      //! Required positions
+      Scenes.items.hw_result_menu.set(0,-48, 500, 950)
+      let mask = Scenes.items.mask;
+      
+
+      // Option
+      if(Scenes.optionsDone[0] == 0){
+        Dom.maskClick(mask, ()=>{
+          setIsProcessRunning(false)
+          Scenes.currentStep = 11
+          Scenes.next()
+        }, 728, 158, 62, 172)
+        setCC("Click on the Voltage and current waveform")
+      } else{
+        Dom.maskClick(mask, ()=>{
+          setIsProcessRunning(false)
+          Scenes.optionsDone[0] = 0
+          Scenes.next()
+        }, 728, 79, 39, 157)
+        setCC("Click on the Load Voltage")
+      }
+
+      // Start
+      
+      Dom.setBlinkArrowOnElement(mask, "left").play()
+      // Dom.setBlinkArrowRed(true,100,100)
+
+      return true
+    }),
+
+    // ! Result 1 1
+    (step9 = function () {
+      setIsProcessRunning(true);
+      // to hide previous step
+      Dom.hideAll();
+      Scenes.items.slider_box.hide()
+
+      Scenes.items.btn_next.show()
+      
+
+      //! Required positions
+      Scenes.items.hw_result_1_1
+        .set(0,-48, 500, 950)
+      let mask = Scenes.items.mask;
+
+      // Start
+      // Dom.maskClick(mask, ()=>{
+      //   setIsProcessRunning(false)
+      //   Scenes.next()
+      // }, 728, 79, 39, 157)
+      // Dom.setBlinkArrowOnElement(mask, "left").play()
+
+      setCC("DC supply voltage of 24 volts is given to buck converter and duty ratio is varied from 0.1 to 0.9.")
+      setCC("The experimental load voltage variation with duty ratio is displayed here.").onend = ()=>{
+        setCC("Click 'Next' to go to next step");
+        Dom.setBlinkArrow(true, 790, 410).play();
+        setIsProcessRunning(false);
+        Scenes.currentStep = 9
+      }
+
+
+      return true
+    }),
+
+    // ! Result 2 1
+    (step10 = function () {
+      setIsProcessRunning(true);
+      // to hide previous step
+      Dom.hideAll();
+      Scenes.items.slider_box.hide()
+
+      Scenes.items.btn_next.show()
+      
+
+      //! Required positions
+      Scenes.items.hw_result_2_1
+        .set(0,-48, 500, 950)
+      let mask = Scenes.items.mask;
+
+      // Start
+      // Dom.maskClick(mask, ()=>{
+      //   setIsProcessRunning(false)
+      //   Scenes.next()
+      // }, 728, 79, 39, 157)
+      // Dom.setBlinkArrowOnElement(mask, "left").play()
+
+      setCC("Here the PWM gate driving signal  given to the MOSFET of buck converter  is shown.").onend = ()=>{
+        setCC("Click 'Next' to go to next step");
+        Dom.setBlinkArrow(true, 790, 410).play();
+        setIsProcessRunning(false);
+      }
+
+
+      return true
+    }),
+    // ! Result 2 2
+    (step11 = function () {
+      setIsProcessRunning(true);
+      // to hide previous step
+      Dom.hideAll();
+      Scenes.items.slider_box.hide()
+
+      Scenes.items.btn_next.show()
+      
+
+      //! Required positions
+      Scenes.items.hw_result_2_2
+        .set(0,-48, 500, 950)
+      let mask = Scenes.items.mask;
+
+      // Start
+      // Dom.maskClick(mask, ()=>{
+      //   setIsProcessRunning(false)
+      //   Scenes.next()
+      // }, 728, 79, 39, 157)
+      // Dom.setBlinkArrowOnElement(mask, "left").play()
+
+      setCC("The experimental waveform of inductor current is shown here. ")
+      setCC("Due to PWM switching the inductor current is linearly increasing and decreasing in one switching cycle.").onend = ()=>{
+        setCC("Click 'Next' to go to next step");
+        Dom.setBlinkArrow(true, 790, 410).play();
+        setIsProcessRunning(false);
+      }
+
+
+      return true
+    }),
+    // ! Result 2 3
+    (step12 = function () {
+      setIsProcessRunning(true);
+      // to hide previous step
+      Dom.hideAll();
+      Scenes.items.slider_box.hide()
+
+      Scenes.items.btn_next.show()
+      
+
+      //! Required positions
+      Scenes.items.hw_result_2_3
+        .set(0,-48, 500, 950)
+      let mask = Scenes.items.mask;
+
+      // Start
+      // Dom.maskClick(mask, ()=>{
+      //   setIsProcessRunning(false)
+      //   Scenes.next()
+      // }, 728, 79, 39, 157)
+      // Dom.setBlinkArrowOnElement(mask, "left").play()
+
+      setCC("Here, the voltage across the switch is shown.").onend = ()=>{
+        setCC("Click 'Next' to go to next step");
+        Dom.setBlinkArrow(true, 790, 410).play();
+        setIsProcessRunning(false);
+      }
+
+
+      return true
+    }),
+    // ! Result 2 4
+    (step12 = function () {
+      setIsProcessRunning(true);
+      // to hide previous step
+      Dom.hideAll();
+      Scenes.items.slider_box.hide()
+
+      Scenes.items.btn_next.show()
+      
+
+      //! Required positions
+      Scenes.items.hw_result_2_4
+        .set(0,-48, 500, 950)
+      let mask = Scenes.items.mask;
+
+      // Start
+      // Dom.maskClick(mask, ()=>{
+      //   setIsProcessRunning(false)
+      //   Scenes.next()
+      // }, 728, 79, 39, 157)
+      // Dom.setBlinkArrowOnElement(mask, "left").play()
+
+      setCC("Here, the voltage across the diode is shown.").onend = ()=>{
+        setTimeout(() => {
+          setCC("Experiment Completed");
+        }, 2000);
+      }
+
+
+      return true
+    }),
     // (completed = function () {
     //   Dom.hideAll();
     //   Scenes.items.contentAdderBox.setContent("");
@@ -3960,6 +4294,23 @@ part1_box1 : new Dom(".part1_box1"),
     //   return true;
     // }),
   ],
+  // ! For adding realcurrentstep in every step
+  // ! For tracking the current step accuratly
+  realCurrentStep: null,
+  setRealCurrentStep(){
+    let count = 0
+    this.steps.forEach((step,idx) => {
+      const constCount = count
+      let newStep = () => {
+        this.realCurrentStep = constCount;
+        console.log(`RealCurrentStep: ${this.realCurrentStep}`)
+        return step();
+      };
+
+      count++;
+      this.steps[idx] = newStep
+    });
+  },
   back() {
     //! animation isRunning
     // if (isRunning) {
@@ -3976,14 +4327,28 @@ part1_box1 : new Dom(".part1_box1"),
     }
   },
   next() {
+    let ignore = true
+    const ignoreDrawerProgress = ()=>{
+      let stepsToIgnore = [5,6,7,8]
+      console.log(this.realCurrentStep)
+      ignore = stepsToIgnore.indexOf(this.realCurrentStep) != -1
+      return 
+    }
+    if(!this.realCurrentStep){
+      Scenes.setRealCurrentStep()
+    }
     //! animation isRunning
     if (isRunning) {
       return
     }
     if (this.currentStep < this.steps.length) {
+      ignoreDrawerProgress()
+
       if (this.steps[this.currentStep]()) {
-        nextDrawerItem();
-        nextProgressBar();
+        if(!ignore){
+          nextDrawerItem();
+          nextProgressBar();
+        }
         this.currentStep++;
       }         
     } else {

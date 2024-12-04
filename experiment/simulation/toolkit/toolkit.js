@@ -10,15 +10,16 @@ const Download = {
   isBtnDownloadClicked: false,
   mainContainerHeight: 638,
   spinnerTimeoutSeconds: 2000, 
-  realCurrentStep: 1,
-  menuStep: 4,
+  checkForStepEndIntervalId: null,
+  previousRealCurrentStep: null,
   // 1 step aage
-  removeFromThese: [1, 2, 3, 4],
+  // removeDownloadFromTheseSteps: [],
+  addDownloadToTheseSteps: [5,6,7,8],
   init() {
     this.setOnClicks();
-    // this.showTookitForCurrentStep();
+    this.showTookitForCurrentStep();
     this.setBtnDownloadBlink();
-    // this.checkForStepEnd();
+    this.checkForStepEnd();
     this.stopImageDrag();
     this.disableRightClick();
     this.setBtnMuteOnClick();
@@ -35,13 +36,16 @@ const Download = {
   },
   capture() {
     window.print();
+    Download.setBlinkArrowYellow(-1)
   },
   showTookitForCurrentStep() {
     $(".toolkit").hide();
 
     let intervalForCheck = null;
     const checkForCurrentStepChange = () => {
-      if (this.removeFromThese.indexOf(Scenes.currentStep - 1) == -1) {
+      // ! don't try to understand (this is working)
+      // * add download to these
+      if (this.addDownloadToTheseSteps.indexOf(Scenes.realCurrentStep) != -1) {
         // clearInterval(intervalForCheck)
         $(".toolkit").show("slow");
         $(".main-window").removeClass("border-right-radius");
@@ -56,16 +60,38 @@ const Download = {
     }, 1000);
   },
   checkForStepEnd() {
-    setInterval(() => {
+    if(this.checkForStepEndIntervalId != null){
+      return
+    }
+    
+    this.checkForStepEndIntervalId = setInterval(() => {
+      if(this.previousRealCurrentStep == Scenes.realCurrentStep){
+        return
+      }
       if (
-        this.removeFromThese.indexOf(Scenes.currentStep - 1) == -1 &&
+        this.addDownloadToTheseSteps.indexOf(Scenes.realCurrentStep) != -1 &&
         !isRunning
       ) {
         // * For running it only one time
         this.setBlinkArrowYellow(true, 12, 495).play();
         this.btnDownloadBlinkAnime.play();
+        this.previousRealCurrentStep = Scenes.realCurrentStep
       }
+
     }, 1000);
+  },
+  playDownloadButtonAnime(){
+     // ! for remoging check for step end
+     if(!this.checkForStepEndIntervalId){
+      clearInterval(this.checkForStepEndIntervalId)
+     }
+     
+     // * For running it only one time
+     this.setBlinkArrowYellow(true, 12, 495).play();
+     this.btnDownloadBlinkAnime.play();
+     setTimeout(() => {
+      this.setBlinkArrowYellow(-1)
+     }, 4000);
   },
   setBlinkArrowYellow(
     isX = true,
@@ -111,8 +137,8 @@ const Download = {
       scale: [1, 1.2],
       backgroundColor: ["#ffdbc3", "#fff000"],
       loop: 4,
-      easing: "easeInOutExpo",
       duration: 1000,
+      direction: 'alternate',
       complete(anim) {
         anim.reset();
       },
@@ -148,12 +174,17 @@ const Download = {
     if (this.isMobileUser) {
       return;
     }
-    // alert(this.isMobileUser)
     const windowInnerHeight = parseFloat(window.innerHeight);
     const mainContainerHeight = this.mainContainerHeight
     let scalePercent = windowInnerHeight / mainContainerHeight;
     let translateYValue =
       (windowInnerHeight - mainContainerHeight) / 2 / scalePercent;
+
+    // ! scale maxed up to 2x
+    if(scalePercent > 2){
+      scalePercent = 2
+      translateYValue = 160.4
+    }
 
     // alert(scalePercent)
     document.querySelector(
@@ -206,42 +237,6 @@ const Download = {
       this.spinnerTimeoutSeconds = 5000
     }
     // alert(zoomLevel)
-  },
-  setRealCurrentStep(step){
-    this.realCurrentStep = step
-    if(step == this.menuStep){
-      this.toolkitHide()
-    }
-  },
-  // this will active the blink and arrow
-  active(){
-    this.setBlinkArrowYellow(true, 12, 495).play();
-    this.btnDownloadBlinkAnime.play();
-  },
-  toolkitShow(){
-    $(".toolkit").show("slow");
-    $(".main-window").removeClass("border-right-radius");
-  },
-  toolkitHide(){
-    $(".toolkit").hide("slow");
-    $(".main-window").addClass("border-right-radius");
-  },
-  checkForHideAndBlink(process){
-    let removeFromThis = this.removeFromThese.indexOf(this.realCurrentStep) != -1
-
-
-    if(removeFromThis){
-      this.toolkitHide()
-      this.setBlinkArrowYellow(-1)
-    }
-    else{
-      if(process){
-        this.toolkitShow()
-      }
-      else if(!removeFromThis && process==false){
-        this.active()
-      }
-    }
   },
 };
 

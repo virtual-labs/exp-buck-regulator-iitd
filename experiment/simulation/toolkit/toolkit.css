@@ -22,6 +22,9 @@
         display: none!important;
         visibility: hidden;
     }
+    .anime-header, .anime-footer{
+        display: flex!important;
+    }
     .main-window{
         border-radius: 10px;
     }

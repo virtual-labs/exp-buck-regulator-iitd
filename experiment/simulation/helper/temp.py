@@ -3,21 +3,35 @@ def html(name):
     return '''
      <img
         class="main-window-imgs"
-        src="./src/images/{0}"
-        alt="{0}"
+        src="./src/images/new/{0}"
     />
     '''.format(name)
 
-def src(name :str,i :int):
-    return name[0:name.find('.')] + ":this.allImgsDom[{0}],\n".format(i)
+def src(name :str, count = "index++"):
+    return name[0:name.find('.')] + f":this.allImgsDom[{count}],\n"
 
 
 def dom(name):
+    
     name1 = name[0: name.find(".")]
     return f'{name1} : new Dom("{name1}"),\n'
 
+# index count
+# count = "index++"
+count = 169
 
-names = os.listdir("E:\\Office work add\\EE3 version1\\src\\images\\exp3")
+# project name
+code = 3
+
+# sneha_folder_path = "E:\\office project\\vlabs-EE\\EE17\\src\\images\\EE17\\"
+
+utkarsh_folder_path = f"C:\\Users\\Predator Helios\\Documents\\Office Work\\local\\vlabs-EE\\EE{code}\\src\\images\\new\\"
+
+
+# utkarsh_folder_path = "S:\\Users\\Utkarsh\\Documents\\Office Main\\All Projects Repo\\vlabs-EE\\EE4\\src\\images\\exp4\\part2\\"
+
+# names = os.listdir(sneha_folder_path)
+names = os.listdir(utkarsh_folder_path)
 
 # namesStr = ''
 # for name in names:
@@ -25,8 +39,8 @@ names = os.listdir("E:\\Office work add\\EE3 version1\\src\\images\\exp3")
 
 # open("temp3.txt","w").write(namesStr)
 
-BASE_COUNT = 13
-count = 144
+# BASE_COUNT = 13
+# count = 168
 
 srcs = ''
 doms = ''
@@ -34,7 +48,8 @@ htms = ''
 for i in range(len(names)):
     htms = htms + html(names[i])
     doms = doms + dom(names[i])
-    srcs = srcs + src(names[i],i+count)
+    srcs = srcs + src(names[i], count)
+    count += 1
 
         
 

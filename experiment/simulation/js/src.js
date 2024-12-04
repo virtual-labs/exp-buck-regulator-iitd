@@ -197,6 +197,13 @@ symbol_R : this.allImgsDom[167],
 
 part_2_graph_data_upper : this.allImgsDom[168],
 
+hw_result_1_1:this.allImgsDom[169],
+hw_result_2_1:this.allImgsDom[170],
+hw_result_2_2:this.allImgsDom[171],
+hw_result_2_3:this.allImgsDom[172],
+hw_result_2_4:this.allImgsDom[173],
+hw_result_menu:this.allImgsDom[174],
+mask:this.allImgsDom[175],
 
       // * Question Mark
       domQs1: this.allQsDom[0],
