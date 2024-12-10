@@ -10,10 +10,10 @@
         "d": "It reduces the switching frequency."
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "a": "Explanation 1: A buck converter, also known as a step-down converter and it gives load voltage lesser than input DC supply voltage.",
         "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "c": "Explanation 3",
+        "d": "Explanation 4"
       },
       "correctAnswer": "a",
       "difficulty": "beginner"
@@ -28,10 +28,10 @@
         "d": "V<sub>o</sub>=DV<sub>in</sub>2"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "a": "Explanation 1: Applying volt-sec balance to the inductor gives the voltage expression of buck converter as V<sub>o</sub>=DV<sub>in</sub>, where “V<sub>in</sub>” is input voltage and “D” is the duty ratio.",
         "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "c": "Explanation 3",
+        "d": "Explanation 4"
       },
       "correctAnswer": "a",
       "difficulty": "beginner"
@@ -46,10 +46,10 @@
         "d": "duty cycle"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "a": "Explanation 1",
         "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "c": "Explanation 3",
+        "d": "Explanation 4: From the voltage gain expression of buck converter (V<sub>o</sub>=DV<sub>in</sub>), the load voltage can easily be controlled by varying the duty ratio D. "
       },
       "correctAnswer": "d",
       "difficulty": "beginner"
@@ -64,10 +64,10 @@
         "d": "D/T<sub>ON</sub>"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "a": "Explanation 1",
         "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "c": "Explanation 3",
+        "d": "Explanation 4: Duty ratio is the ratio of switch ON time period and total operating time period,<br><img src='images/expl1.png' height='120px'> "
       },
       "correctAnswer": "d",
       "difficulty": "beginner"
@@ -82,10 +82,10 @@
         "d": "75 V"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "a": "Explanation 1",
+        "b": "Explanation 2: The load voltage expression of buck converter is,<br><img src='images/expl2.png' height='200px'> ",
+        "c": "Explanation 3",
+        "d": "Explanation 4"
       },
       "correctAnswer": "b",
       "difficulty": "beginner"
