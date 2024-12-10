@@ -90,7 +90,7 @@
       },
       "correctAnswer": "b",
       "difficulty": "beginner"
-    }
+    },
 
     {
       "question": "6. What is the role of diode in buck converter?:",
@@ -108,7 +108,7 @@
       },
       "correctAnswer": "b",
       "difficulty": "beginner"
-    }
+    },
 
     {
       "question": "7. The efficiency of a buck converter is maximized by::",
