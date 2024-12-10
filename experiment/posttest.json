@@ -10,10 +10,10 @@
         "d": "(1-D)(V<sub>in</sub>)/(Lf<sub>s</sub>)"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "a": "Explanation 1",
         "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "c": "Explanation 3: During OFF period, voltage across inductor is<br><img src='images/expl3.png' height='150px'>",
+        "d": "Explanation 4"
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
@@ -28,10 +28,10 @@
         "d": "0.2 A"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "a": "Explanation 1: Voltage expression for buck converter is<br><img src='images/expl4.png' height='400px'> ",
         "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "c": "Explanation 3",
+        "d": "Explanation 4"
       },
       "correctAnswer": "a",
       "difficulty": "beginner"
@@ -46,10 +46,10 @@
         "d": "<img src='images/postq4.png' height='30px'><br>"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "a": "Explanation 1",
         "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "c": "Explanation 3: <img src='images/expl5.png' height='400px'>",
+        "d": "Explanation 4"
       },
       "correctAnswer": "c",
       "difficulty": "beginner"
@@ -65,10 +65,10 @@
         "d": "P<sub>Loss</sub> = 30 W"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "a": "Explanation 1: <img src='images/expl6.png' height='200px'>",
         "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "c": "Explanation 3",
+        "d": "Explanation 4"
       },
       "correctAnswer": "a",
       "difficulty": "beginner"
@@ -83,22 +83,49 @@
         "d": "v<sub>Sw</sub> = (V<sub>o</sub> -V<sub>in</sub>)"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "a": "Explanation 1",
+        "b": "Explanation 2: When switch is in OFF-state, the DC supply voltage is connected across the switch and hence its voltage stress is equal to input voltage.",
+        "c": "Explanation 3",
+        "d": "Explanation 4"
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    }
+
+    {
+      "question": "6. What is the role of diode in buck converter?:",
+      "answers": {
+        "a": "Prevents reverse current flow",
+        "b": "Conducts current during the OFF period of the switch",
+        "c": "Filters the output",
+        "d": "Reduces switching losses"
+      },
+      "explanations": {
+        "a": "Explanation 1",
+        "b": "Explanation 2: When the switch goes to OFF-state the diode ensures current flow in the inductor.",
+        "c": "Explanation 3",
+        "d": "Explanation 4"
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    }
+
+    {
+      "question": "7. The efficiency of a buck converter is maximized by::",
+      "answers": {
+        "a": "Minimizing switching losses and conduction losses",
+        "b": "Increasing the duty ratio",
+        "c": "Using a larger inductor",
+        "d": "Increasing the input voltage"
+      },
+      "explanations": {
+        "a": "Explanation 1: The losses (transition and conduction losses) taking place in the switch and diode should be minimized.",
         "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "c": "Explanation 3",
+        "d": "Explanation 4"
       },
       "correctAnswer": "a",
       "difficulty": "beginner"
     }
   ]
 }
-
-
-
-
-
-
-
-
-
