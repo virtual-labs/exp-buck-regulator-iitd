@@ -511,4 +511,4 @@ Simplifying eqn. (24) results in
     ..(25)
       </div>
 <br><br>
-
+(Effect of r<sub>c</sub> is not considered for simplification of equation)
