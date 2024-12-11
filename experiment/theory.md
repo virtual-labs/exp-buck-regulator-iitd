@@ -511,4 +511,10 @@ Simplifying eqn. (24) results in
     ..(25)
       </div>
 <br><br>
+
+<div style="float: left; width:100%;"><br>
 (Effect of r<sub>c</sub> is not considered for simplification of equation)
+<br><br>
+</div>
+
+
