@@ -517,4 +517,7 @@ Simplifying eqn. (24) results in
 <br><br>
 </div>
 
-
+<div style="float: left; width:100%;">
+  
+#### ("For more Information on mathematical analysis, see references")
+<br></div>
