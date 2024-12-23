@@ -2,37 +2,92 @@
   "version": 2.0,
   "questions": [
     {
-      "question": "This is a Sample Question 1?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+      "question": "<center>Answer the questions given below (refer Fig.1):<br> <img src='images/pre1.png' height='300px'><br><br>Fig. 1. Circuit configuration of buck converter.</center><br><br> 1. Which of the following statement is true for a buck converter?",
+      "answers": {  
+        "a": "The output voltage is lower than the input voltage.",
+        "b": "The output current is lower than the input current.",
+        "c": "The output power is higher than the input power.",
+        "d": "It reduces the switching frequency."
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "a": "Explanation 1: A buck converter, also known as a step-down converter and it gives load voltage lesser than input DC supply voltage.",
         "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "c": "Explanation 3",
+        "d": "Explanation 4"
       },
       "correctAnswer": "a",
       "difficulty": "beginner"
     },
+      
     {
-      "question": "This is a Sample Question 2?",
+      "question": "2. The output voltage expression for a buck converter is",
       "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
+        "a": "V<sub>o</sub>=DV<sub>in</sub>",
+        "b": "V<sub>o</sub>=(1-D)V<sub>in</sub>",
+        "c": "V<sub>o</sub>=1/(1-D)V<sub>in</sub>",
+        "d": "V<sub>o</sub>=DV<sub>in</sub>2"
       },
       "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
+        "a": "Explanation 1: Applying volt-sec balance to the inductor gives the voltage expression of buck converter as V<sub>o</sub>=DV<sub>in</sub>, where “V<sub>in</sub>” is input voltage and “D” is the duty ratio.",
         "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
+        "c": "Explanation 3",
+        "d": "Explanation 4"
       },
-      "correctAnswer": "c",
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    
+    {
+      "question": "3. The load voltage of a buck converter can be controlled by varying the:",
+      "answers": {
+        "a": "inductor position",
+        "b": "firing angle",
+        "c": "extinction angle",
+        "d": "duty cycle"
+      },
+      "explanations": {
+        "a": "Explanation 1",
+        "b": "Explanation 2",
+        "c": "Explanation 3",
+        "d": "Explanation 4: From the voltage gain expression of buck converter (V<sub>o</sub>=DV<sub>in</sub>), the load voltage can easily be controlled by varying the duty ratio D. "
+      },
+      "correctAnswer": "d",
+      "difficulty": "beginner"
+    },
+        
+    {
+    "question": "4. If ‘T<sub>ON</sub>’ is the switch-ON time of PWM signal and ‘D’ is its duty ratio, then the operating frequency is:",
+      "answers": {
+        "a": "T<sub>ON</sub>/D",
+        "b": "T<sub>OFF</sub>/D",
+        "c": "D/T<sub>OFF</sub>",
+        "d": "D/T<sub>ON</sub>"
+      },
+      "explanations": {
+        "a": "Explanation 1",
+        "b": "Explanation 2",
+        "c": "Explanation 3",
+        "d": "Explanation 4: Duty ratio is the ratio of switch ON time period and total operating time period,<br><img src='images/expl1.png' height='120px'> "
+      },
+      "correctAnswer": "d",
+      "difficulty": "beginner"
+    },
+    
+    {
+      "question": "5. Find the load voltage when the duty cycle of buck converter is 55 % and input voltage is 100 V.",
+      "answers": {
+        "a": "45 V",
+        "b": "55 V",
+        "c": "65 V",
+        "d": "75 V"
+      },
+      "explanations": {
+        "a": "Explanation 1",
+        "b": "Explanation 2: The load voltage expression of buck converter is,<br><img src='images/expl2.png' height='200px'> ",
+        "c": "Explanation 3",
+        "d": "Explanation 4"
+      },
+      "correctAnswer": "b",
       "difficulty": "beginner"
     }
   ]
